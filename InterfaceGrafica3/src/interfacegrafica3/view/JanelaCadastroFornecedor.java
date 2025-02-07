@@ -294,10 +294,64 @@ public class JanelaCadastroFornecedor extends javax.swing.JInternalFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        limparJanela();
+        FornecedorRepository fornecedorRepository = new FornecedorRepository();
+        Fornecedor fornecedor = fornecedorRepository.selecionar(
+                janelaPrincipal.conexaoMySQL.connection, 
+                ">", 
+                Integer.parseInt(jTextField9.getText()));
+        if (fornecedor != null) {
+            jTextField1.setText(fornecedor.getNome());
+            jTextField2.setText(fornecedor.getEmail());
+            jTextField3.setText(fornecedor.getEndereco());
+            jTextField4.setText(fornecedor.getTelefone());
+            jTextField5.setText(fornecedor.getCnpj());
+            jTextField6.setText(fornecedor.getInscricaoEstadual());
+            jTextField7.setText(fornecedor.getNomeFantasia());
+            jTextField8.setText(fornecedor.getCategoria());
+            jComboBox1.setSelectedItem(fornecedor.getUf());
+            jTextField9.setText(String.valueOf(fornecedor.getId()));
+        } else {
+            limparJanela();
+            jTextField9.setText("0");
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        if(Integer.parseInt(jTextField9.getText()) > 0){
+            int resposta = JOptionPane.showConfirmDialog(
+                    this,
+                    "Deseja realmente excluir esse fornecedor?",
+                    "Excluir?",
+                    JOptionPane.YES_NO_OPTION
+            );
+            if(resposta == JOptionPane.YES_OPTION){
+                //excluir registro:
+                int id = Integer.parseInt(jTextField9.getText());
+                //janelaPrincipal.lstPessoa.remove(id-1);
+                //janelaPrincipal.ultimoId -=1;
+                Fornecedor fornecedor = new Fornecedor();
+                fornecedor.setId(id);
+                FornecedorRepository fornecedorRepository = new FornecedorRepository();
+                boolean retornoBanco = fornecedorRepository.deletar(
+                        janelaPrincipal.conexaoMySQL.connection,
+                        fornecedor
+                );
+                if(retornoBanco){
+                    limparJanela();
+                    jTextField9.setText("0");
+                    //atualizaIdLista();
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Fornecedor excluído com sucesso!",
+                            "Tela de cadastro",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                }                
+                
+            }            
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -350,6 +404,27 @@ public class JanelaCadastroFornecedor extends javax.swing.JInternalFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+                limparJanela();
+        FornecedorRepository fornecedorRepository = new FornecedorRepository();
+        Fornecedor fornecedor = fornecedorRepository.selecionar(
+                janelaPrincipal.conexaoMySQL.connection, 
+                "<", 
+                Integer.parseInt(jTextField9.getText()));
+        if (fornecedor != null) {
+            jTextField1.setText(fornecedor.getNome());
+            jTextField2.setText(fornecedor.getEmail());
+            jTextField3.setText(fornecedor.getEndereco());
+            jTextField4.setText(fornecedor.getTelefone());
+            jTextField5.setText(fornecedor.getCnpj());
+            jTextField6.setText(fornecedor.getInscricaoEstadual());
+            jTextField7.setText(fornecedor.getNomeFantasia());
+            jTextField8.setText(fornecedor.getCategoria());
+            jComboBox1.setSelectedItem(fornecedor.getUf());
+            jTextField9.setText(String.valueOf(fornecedor.getId()));
+        } else {
+            limparJanela();
+            jTextField9.setText("0");
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
 
