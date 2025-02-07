@@ -20,6 +20,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     JanelaCadastro janelaCadastro;
     JanelaCadastroUF janelaCadastroUF;
+    JanelaCadastroFornecedor janelaCadastroFornecedor;
     public List<Pessoa> lstPessoa;
     public int ultimoId;
     private Conexao conexao;
@@ -59,6 +60,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
         openMenuItem1 = new javax.swing.JMenuItem();
+        openMenuItem2 = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         contentMenuItem = new javax.swing.JMenuItem();
@@ -86,6 +88,15 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             }
         });
         fileMenu.add(openMenuItem1);
+
+        openMenuItem2.setMnemonic('c');
+        openMenuItem2.setText("Cadastro de Fornecedor");
+        openMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openMenuItem2ActionPerformed(evt);
+            }
+        });
+        fileMenu.add(openMenuItem2);
 
         exitMenuItem.setMnemonic('x');
         exitMenuItem.setText("Sair");
@@ -192,6 +203,24 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_openMenuItem1ActionPerformed
 
+    private void openMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        try{
+            janelaCadastroFornecedor = JanelaCadastroFornecedor.getInstancia(this);
+            if(!desktopPane.isAncestorOf(janelaCadastroFornecedor)){
+                desktopPane.add("JanelaCadastroFornecedor", janelaCadastroFornecedor);
+                janelaCadastroFornecedor.setDefaultCloseOperation(JInternalFrame.DO_NOTHING_ON_CLOSE);
+            }
+            janelaCadastroFornecedor.setVisible(true);
+            janelaCadastroFornecedor.setSelected(true);
+        }catch(Exception ex){
+            JOptionPane.showConfirmDialog(null, 
+                    "Erro ao abrir a tela de cadastro de Fornecedor: " + ex.getMessage(),
+                    "Cadastro de Fornecedor",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_openMenuItem2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -237,6 +266,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem openMenuItem1;
+    private javax.swing.JMenuItem openMenuItem2;
     // End of variables declaration//GEN-END:variables
 
 }
