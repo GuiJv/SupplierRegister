@@ -25,6 +25,10 @@ public class Fornecedor extends Pessoa {
         this.categoria = categoria;
     }
 
+    public Fornecedor(){
+        
+    }
+    
     public int getUf() {
         return uf;
     }
