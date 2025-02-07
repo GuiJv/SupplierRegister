@@ -301,6 +301,8 @@ public class JanelaCadastroFornecedor extends javax.swing.JInternalFrame {
                 ">", 
                 Integer.parseInt(jTextField9.getText()));
         if (fornecedor != null) {
+            UfRepository ufRepository = new UfRepository();
+            List<String> ufs = ufRepository.selecionarNomesUF(janelaPrincipal.conexaoMySQL.connection);
             jTextField1.setText(fornecedor.getNome());
             jTextField2.setText(fornecedor.getEmail());
             jTextField3.setText(fornecedor.getEndereco());
@@ -309,7 +311,7 @@ public class JanelaCadastroFornecedor extends javax.swing.JInternalFrame {
             jTextField6.setText(fornecedor.getInscricaoEstadual());
             jTextField7.setText(fornecedor.getNomeFantasia());
             jTextField8.setText(fornecedor.getCategoria());
-            jComboBox1.setSelectedItem(fornecedor.getUf());
+            jComboBox1.setSelectedItem(ufs.get(fornecedor.getUf()));
             jTextField9.setText(String.valueOf(fornecedor.getId()));
         } else {
             limparJanela();
@@ -385,6 +387,7 @@ public class JanelaCadastroFornecedor extends javax.swing.JInternalFrame {
             fornecedor);
     } else {
         // Atualizar fornecedor existente
+        fornecedor.setId(id);
         retornoBanco = fornecedorRepository.atualizar(
             janelaPrincipal.conexaoMySQL.connection, 
             fornecedor);

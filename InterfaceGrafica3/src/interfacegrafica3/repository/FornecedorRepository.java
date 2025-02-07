@@ -51,7 +51,6 @@ public class FornecedorRepository implements Crud<Fornecedor> {
     @Override
     public boolean atualizar(Connection connection, Fornecedor fornecedor) {
         PreparedStatement stmt = null;
-        System.out.println(fornecedor);
         try {
             String comando = "UPDATE cadastro_fornecedor SET " +
                              "nome = ?, endereco = ?, email = ?, telefone = ?, uf = ?, cnpj = ?, inscricao_estadual = ?, nome_fantasia = ?, categoria = ? " +
