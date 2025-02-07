@@ -4,6 +4,10 @@
  */
 package interfacegrafica3.view;
 
+import interfacegrafica3.model.Fornecedor;
+import interfacegrafica3.repository.FornecedorRepository;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Guilherme J. Vinhas
@@ -19,6 +23,7 @@ public class JanelaCadastroFornecedor extends javax.swing.JInternalFrame {
     public JanelaCadastroFornecedor(JanelaPrincipal janelaPrincipal) {
         initComponents();
         this.janelaPrincipal = janelaPrincipal;
+        jTextField9.setText("0");
     }
     
     public static JanelaCadastroFornecedor getInstancia(JanelaPrincipal janelaPrincipal){
@@ -95,6 +100,11 @@ public class JanelaCadastroFornecedor extends javax.swing.JInternalFrame {
         });
 
         jButton1.setText("Gravar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Excluir");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -234,6 +244,18 @@ public class JanelaCadastroFornecedor extends javax.swing.JInternalFrame {
         dispose();
     }
     
+        private void limparJanela() {
+    jTextField1.setText("");
+    jTextField2.setText("");
+    jTextField3.setText("");
+    jTextField4.setText("");
+    jTextField5.setText("");
+    jTextField6.setText("");
+    jTextField7.setText("");
+    jTextField8.setText("");
+    jComboBox1.setSelectedIndex(0);
+}
+    
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
@@ -254,6 +276,49 @@ public class JanelaCadastroFornecedor extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         fecharJanela();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+     int id = Integer.parseInt(jTextField9.getText());
+    Fornecedor fornecedor = new Fornecedor();
+    
+    fornecedor.setNome(jTextField1.getText());
+    fornecedor.setEndereco(jTextField2.getText());
+    fornecedor.setEmail(jTextField3.getText());
+    fornecedor.setTelefone(jTextField4.getText());
+    fornecedor.setUf((int) jComboBox1.getSelectedIndex()); 
+    fornecedor.setCnpj(jTextField5.getText());
+    fornecedor.setInscricaoEstadual(jTextField6.getText());
+    fornecedor.setNomeFantasia(jTextField7.getText());
+    fornecedor.setCategoria(jTextField8.getText());
+    
+    FornecedorRepository fornecedorRepository = new FornecedorRepository();
+    boolean retornoBanco = false;
+
+
+    if (id == 0) {
+        // Inserir novo fornecedor
+        retornoBanco = fornecedorRepository.inserir(
+            janelaPrincipal.conexaoMySQL.connection, 
+            fornecedor);
+    } else {
+        // Atualizar fornecedor existente
+        retornoBanco = fornecedorRepository.atualizar(
+            janelaPrincipal.conexaoMySQL.connection, 
+            fornecedor);
+    }
+
+    if (retornoBanco) {
+        JOptionPane.showMessageDialog(
+                this,
+                "Cadastro de fornecedor atualizado com sucesso!",
+                "Tela de Cadastro",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+        // Limpar a janela
+        limparJanela();
+    }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
