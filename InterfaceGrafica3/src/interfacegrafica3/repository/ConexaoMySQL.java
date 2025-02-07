@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  * @author Professor
  */
 public class ConexaoMySQL {
-    private Conexao conexao = null;
+    private Conexao conexao = new Conexao("localhost", "root", "12345", 3306 , "task_manager" );
     public static Connection connection = null;
     
     public ConexaoMySQL(Conexao conexao){
@@ -29,12 +29,12 @@ public class ConexaoMySQL {
                              "/" + conexao.getNomeBanco();
                 
                 //pegar a classe da Librarie q adicionamos:
+                System.out.println(conexao.getPassword());
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                
                 connection = DriverManager.getConnection(
-                        url,
-                        conexao.getUser(),
-                        conexao.getPassword()
+                        "jdbc:mysql://localhost:3306/register",
+                        "root",
+                        "12345"
                 );
                 return true;                
             }catch(Exception ex){
